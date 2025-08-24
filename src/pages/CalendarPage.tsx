@@ -1,11 +1,15 @@
 import React from "react";
-import { Expense } from "../types/index";
+import { Expense, Category } from "../types/index";
 
 interface CalendarPageProps {
   expenses: Expense[];
+  categories: Category[];
 }
 
-const CalendarPage: React.FC<CalendarPageProps> = ({ expenses }) => {
+const CalendarPage: React.FC<CalendarPageProps> = ({
+  expenses,
+  categories,
+}) => {
   return (
     <>
       <div>カレンダーページ</div>

@@ -7,9 +7,8 @@ export interface Expense {
 }
 
 export interface Budget {
-  id: string;
+  id: number;
   amount: number;
-  weekStart: string;
 }
 
 export interface Category {

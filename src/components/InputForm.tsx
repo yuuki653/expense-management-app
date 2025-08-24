@@ -1,15 +1,26 @@
 import React, { useState } from "react";
-import { Expense } from "../types";
+import { Link } from "react-router-dom";
+import { Expense, Category, Budget } from "../types";
 
 interface InputFormProps {
   addExpense: (expenses: Expense) => void;
+  categories: Category[];
+  budget: Budget;
+  setBudget: (amount: number) => void;
 }
 
-const InputForm: React.FC<InputFormProps> = ({ addExpense }) => {
+const InputForm: React.FC<InputFormProps> = ({
+  addExpense,
+  categories,
+  budget,
+  setBudget,
+}) => {
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("food");
   const [date, setDate] = useState("");
   const [memo, setMemo] = useState("");
+  const [isEditingBudget, setIsEditingBudget] = useState(false);
+  const [newBudgetAmount, setNewBudgetAmount] = useState("");
 
   const [error, setError] = useState("");
 
@@ -43,8 +54,18 @@ const InputForm: React.FC<InputFormProps> = ({ addExpense }) => {
     addExpense(newExpense);
     console.log({ amount, category, date, memo });
     setAmount("");
-    setCategory("food");
+    setCategory(categories[0]?.id);
     setMemo("");
+  };
+
+  const handleBudgetEditStart = () => {
+    setNewBudgetAmount(budget.amount.toString());
+    setIsEditingBudget(true);
+  };
+
+  const handleBudgetEditSave = () => {
+    setBudget(Number(newBudgetAmount));
+    setIsEditingBudget(false);
   };
 
   return (
@@ -52,6 +73,24 @@ const InputForm: React.FC<InputFormProps> = ({ addExpense }) => {
       {error && (
         <div className="text-center text-rose-700 font-bold">{error}</div>
       )}
+
+      {isEditingBudget ? (
+        <div className="flex gap-3">
+          <input
+            type="text"
+            value={newBudgetAmount}
+            onChange={(e) => setNewBudgetAmount(e.target.value)}
+            className="border-2"
+          />
+          <button onClick={handleBudgetEditSave}>保存</button>
+        </div>
+      ) : (
+        <div className="flex gap-3">
+          <p>予算：{budget.amount}円</p>
+          <button onClick={handleBudgetEditStart}>編集</button>
+        </div>
+      )}
+
       <form
         onSubmit={handleRecord}
         className="flex flex-col justify-center items-center gap-2 bg-gray-100 rounded-md p-8 text-center"
@@ -69,10 +108,9 @@ const InputForm: React.FC<InputFormProps> = ({ addExpense }) => {
           onChange={(e) => setCategory(e.target.value)}
           className="h-9 w-60 border-2 rounded-md border-gray-500 px-2"
         >
-          <option value="food">食費</option>
-          <option value="entertainment">自由費</option>
-          <option value="daily">日用品費</option>
-          <option value="medical">医療費</option>
+          {categories.map((category) => (
+            <option value={category.id}>{category.name}</option>
+          ))}
         </select>
         <input
           type="date"
@@ -93,6 +131,12 @@ const InputForm: React.FC<InputFormProps> = ({ addExpense }) => {
         >
           記録
         </button>
+        <Link
+          to="/category"
+          className="h-9 w-48 mt-4 border-2 border-green-800 bg-green-300 hover:bg-green-500 rounded-md px-3 flex items-center justify-center transition-colors"
+        >
+          <span>カテゴリーを管理する</span>
+        </Link>
       </form>
     </div>
   );
