@@ -35,6 +35,7 @@ function App() {
     };
     setCategories([...categories, newCategory]);
   };
+  console.log("App.tsx expenses:", expenses);
 
   return (
     <Router>

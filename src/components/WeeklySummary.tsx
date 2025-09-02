@@ -1,5 +1,6 @@
 import React from "react";
 import { Expense, Budget } from "../types/index";
+import { getMonday, getWeekRange, isDateInWeek } from "../utils/dateUtils";
 
 interface WeeklySummaryProps {
   expenses: Expense[];
@@ -7,8 +8,17 @@ interface WeeklySummaryProps {
 }
 
 const WeeklySummary: React.FC<WeeklySummaryProps> = ({ expenses, budget }) => {
-  // const budget = 10000;
-  const spent = expenses.reduce((total, expense) => total + expense.amount, 0);
+  const today = new Date();
+  const monday = getMonday(today);
+  const weekRange = getWeekRange(monday);
+  const thisWeekExpenses = expenses.filter((expense) =>
+    isDateInWeek(expense.date, weekRange.start, weekRange.end)
+  );
+  const spent = thisWeekExpenses.reduce(
+    (total, expense) => total + expense.amount,
+    0
+  );
+
   const remaining = budget.amount - spent;
 
   return (

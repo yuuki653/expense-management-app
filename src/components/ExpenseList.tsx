@@ -1,6 +1,11 @@
 import React from "react";
 import { Expense, Category } from "../types/index";
-import { formatDate } from "../utils/dateUtils";
+import {
+  formatDate,
+  getMonday,
+  getWeekRange,
+  isDateInWeek,
+} from "../utils/dateUtils";
 import { getCategoryName } from "../utils/categoryUtils";
 
 interface ExpenseListProps {
@@ -9,9 +14,20 @@ interface ExpenseListProps {
 }
 
 const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, categories }) => {
-  const descExpenselist = [...expenses].sort(
+  console.log("expenseList");
+  const today = new Date();
+  const monday = getMonday(today);
+  const weekRange = getWeekRange(monday);
+  const thisWeekExpenses = expenses.filter((expense) =>
+    isDateInWeek(expense.date, weekRange.start, weekRange.end)
+  );
+
+  const descExpenselist = [...thisWeekExpenses].sort(
     (a, b) => Date.parse(b.date) - Date.parse(a.date)
   );
+
+  console.log(weekRange);
+  console.log(thisWeekExpenses);
 
   return (
     <>

@@ -13,6 +13,8 @@ const ReportPage: React.FC<ReportPageProps> = ({
   categories,
   budget,
 }) => {
+  console.log("ReportPage received expenses:", expenses);
+  console.log("ReportPage expenses length:", expenses.length);
   return (
     <>
       <WeeklySummary expenses={expenses} budget={budget} />
