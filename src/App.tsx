@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { saveData, loadData, removeData } from "./utils/localStorage";
 import Layout from "./components/Layout";
 import RecordPage from "./pages/RecordPage";
 import CalendarPage from "./pages/CalendarPage";
@@ -20,6 +21,41 @@ function App() {
     amount: 10000,
   });
 
+  // 初期読み込み
+  useEffect(() => {
+    const saved = loadData<Expense[]>("expenses");
+    if (saved) {
+      setExpenses(saved);
+    }
+  }, []);
+
+  useEffect(() => {
+    const saved = loadData<Category[]>("categories");
+    if (saved) {
+      setCategories(saved);
+    }
+  }, []);
+
+  useEffect(() => {
+    const saved = loadData<Budget>("budget");
+    if (saved) {
+      setBudgetState(saved);
+    }
+  }, []);
+
+  // 自動保存
+  useEffect(() => {
+    saveData("expenses", expenses);
+  }, [expenses]);
+
+  useEffect(() => {
+    saveData("categories", categories);
+  }, [categories]);
+
+  useEffect(() => {
+    saveData("budget", budget);
+  }, [budget]);
+
   const setBudget = (amount: number) => {
     setBudgetState((prev) => ({ ...prev, amount }));
   };
@@ -35,7 +71,16 @@ function App() {
     };
     setCategories([...categories, newCategory]);
   };
-  console.log("App.tsx expenses:", expenses);
+
+  const deleteExpense = (id: string) => {
+    setExpenses(expenses.filter((expense) => expense.id !== id));
+  };
+
+  const updateExpense = (id: string, updateExpense: Expense) => {
+    setExpenses(
+      expenses.map((expense) => (expense.id === id ? updateExpense : expense))
+    );
+  };
 
   return (
     <Router>
@@ -56,7 +101,12 @@ function App() {
           <Route
             path="/calendar"
             element={
-              <CalendarPage expenses={expenses} categories={categories} />
+              <CalendarPage
+                expenses={expenses}
+                categories={categories}
+                deleteExpense={deleteExpense}
+                updateExpense={updateExpense}
+              />
             }
           ></Route>
           <Route
@@ -66,6 +116,8 @@ function App() {
                 expenses={expenses}
                 categories={categories}
                 budget={budget}
+                deleteExpense={deleteExpense}
+                updateExpense={updateExpense}
               />
             }
           ></Route>

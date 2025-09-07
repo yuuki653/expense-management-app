@@ -52,7 +52,6 @@ const InputForm: React.FC<InputFormProps> = ({
       memo,
     };
     addExpense(newExpense);
-    console.log({ amount, category, date, memo });
     setAmount("");
     setCategory(categories[0]?.id);
     setMemo("");
@@ -109,7 +108,9 @@ const InputForm: React.FC<InputFormProps> = ({
           className="h-9 w-60 border-2 rounded-md border-gray-500 px-2"
         >
           {categories.map((category) => (
-            <option value={category.id}>{category.name}</option>
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
           ))}
         </select>
         <input

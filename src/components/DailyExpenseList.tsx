@@ -1,27 +1,22 @@
 import React, { useState } from "react";
 import { Expense, Category } from "../types/index";
-import {
-  formatDate,
-  getSaturday,
-  getWeekRange,
-  isDateInWeek,
-} from "../utils/dateUtils";
+import { formatDate } from "../utils/dateUtils";
 import { getCategoryName } from "../utils/categoryUtils";
 
-interface ExpenseListProps {
+interface DailyExpenseListProps {
   expenses: Expense[];
   categories: Category[];
+  selectedDate: string;
   deleteExpense: (id: string) => void;
   updateExpense: (id: string, updateExpense: Expense) => void;
-  weekOffset: number;
 }
 
-const ExpenseList: React.FC<ExpenseListProps> = ({
+const DailyExpenseList: React.FC<DailyExpenseListProps> = ({
   expenses,
   categories,
+  selectedDate,
   deleteExpense,
   updateExpense,
-  weekOffset,
 }) => {
   const [editingExpense, setEditingExpense] = useState<Expense | null>(null);
   const [editAmount, setEditAmount] = useState("");
@@ -29,16 +24,8 @@ const ExpenseList: React.FC<ExpenseListProps> = ({
   const [editDate, setEditDate] = useState("");
   const [editMemo, setEditMemo] = useState("");
 
-  const targetDate = new Date();
-  targetDate.setDate(targetDate.getDate() + weekOffset * 7);
-  const saturday = getSaturday(targetDate);
-  const weekRange = getWeekRange(saturday);
-  const thisWeekExpenses = expenses.filter((expense) =>
-    isDateInWeek(expense.date, weekRange.start, weekRange.end)
-  );
-
-  const descExpenselist = [...thisWeekExpenses].sort(
-    (a, b) => Date.parse(b.date) - Date.parse(a.date)
+  const dailyExpenses = expenses.filter(
+    (expense) => expense.date === selectedDate
   );
 
   const handleSave = () => {
@@ -61,13 +48,12 @@ const ExpenseList: React.FC<ExpenseListProps> = ({
 
   return (
     <>
-      <div>支出一覧</div>
+      <p>{formatDate(selectedDate)}</p>
       <ul>
-        {descExpenselist.map((expense) => (
+        {dailyExpenses.map((expense) => (
           <li key={expense.id}>
             <span className="flex">
-              <p>{formatDate(expense.date)}</p>
-              <p>{expense.amount.toLocaleString()}円</p>
+              <p>💰{expense.amount.toLocaleString()}円</p>
               <p className="flex">
                 （{getCategoryName(expense.category, categories)}
                 {expense.memo && <p>：{expense.memo}</p>}）
@@ -158,4 +144,4 @@ const ExpenseList: React.FC<ExpenseListProps> = ({
   );
 };
 
-export default ExpenseList;
+export default DailyExpenseList;

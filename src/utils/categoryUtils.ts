@@ -12,7 +12,7 @@ export const isDuplicationCategory = (
   newCategoryName: string,
   categories: Category[]
 ): Boolean => {
-  const result = categories.some((cat) => cat.name !== newCategoryName);
+  const result = categories.some((cat) => cat.name === newCategoryName);
 
   return result;
 };
