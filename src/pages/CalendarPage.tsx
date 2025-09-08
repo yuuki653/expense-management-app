@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import DailyExpenseList from "../components/DailyExpenseList";
 import {
+  formatDate,
   generateCalendarDates,
   getDailyTotal,
   getSaturday,
+  getMonthRange,
 } from "../utils/dateUtils";
 import { Expense, Category } from "../types/index";
 
@@ -20,19 +22,43 @@ const CalendarPage: React.FC<CalendarPageProps> = ({
   deleteExpense,
   updateExpense,
 }) => {
-  const [startDate, setStartDate] = useState(getSaturday(new Date()));
+  const [startDate, setStartDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<string>(
     new Date().toISOString().split("T")[0]
   );
+  const [monthOffset, setMonthOffset] = useState(0);
 
-  const calendarDates = generateCalendarDates(startDate);
+  const targetDate = new Date(startDate);
+  targetDate.setDate(startDate.getDate() + monthOffset * 35);
+  const startSaturday = getSaturday(targetDate);
+  const monthRange = getMonthRange(startSaturday);
+  const calendarDates = generateCalendarDates(startSaturday);
 
   return (
     <div className="w-[90%] mx-auto">
       <h2 className="text-2xl font-bold text-center mb-4">カレンダー表示</h2>
+      <div className="flex justify-center gap-5 text-lg font-bold mb-5">
+        <button
+          onClick={() => {
+            setMonthOffset(monthOffset - 1);
+          }}
+        >
+          ◀
+        </button>
+        <p>
+          {formatDate(monthRange.start)} ～ {formatDate(monthRange.end)}
+        </p>
+        <button
+          onClick={() => {
+            setMonthOffset(monthOffset + 1);
+          }}
+        >
+          ▶
+        </button>
+      </div>
       <input
         type="date"
-        value={startDate.toISOString().split("T")[0]}
+        value={getSaturday(startDate).toISOString().split("T")[0]}
         onChange={(e) => setStartDate(getSaturday(new Date(e.target.value)))}
         className="h-9 w-60 border-2 rounded-md border-gray-500 px-2"
       />

@@ -49,37 +49,41 @@ const DailyExpenseList: React.FC<DailyExpenseListProps> = ({
   return (
     <>
       <p>{formatDate(selectedDate)}</p>
-      <ul>
-        {dailyExpenses.map((expense) => (
-          <li key={expense.id}>
-            <span className="flex">
-              <p>💰{expense.amount.toLocaleString()}円</p>
-              <p className="flex">
-                （{getCategoryName(expense.category, categories)}
-                {expense.memo && <p>：{expense.memo}</p>}）
-              </p>
-              <button
-                onClick={() => {
-                  setEditingExpense(expense);
-                  setEditAmount(expense.amount.toString());
-                  setEditCategory(expense.category);
-                  setEditDate(expense.date);
-                  setEditMemo(expense.memo || "");
-                }}
-              >
-                編集
-              </button>
-              <button
-                onClick={() => {
-                  deleteExpense(expense.id);
-                }}
-              >
-                削除
-              </button>
-            </span>
-          </li>
-        ))}
-      </ul>
+      {dailyExpenses.length === 0 ? (
+        <p>💰No Money Day</p>
+      ) : (
+        <ul>
+          {dailyExpenses.map((expense) => (
+            <li key={expense.id}>
+              <span className="flex">
+                <p>💰{expense.amount.toLocaleString()}円</p>
+                <p className="flex">
+                  （{getCategoryName(expense.category, categories)}
+                  {expense.memo && <p>：{expense.memo}</p>}）
+                </p>
+                <button
+                  onClick={() => {
+                    setEditingExpense(expense);
+                    setEditAmount(expense.amount.toString());
+                    setEditCategory(expense.category);
+                    setEditDate(expense.date);
+                    setEditMemo(expense.memo || "");
+                  }}
+                >
+                  編集
+                </button>
+                <button
+                  onClick={() => {
+                    deleteExpense(expense.id);
+                  }}
+                >
+                  削除
+                </button>
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
 
       {editingExpense && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
