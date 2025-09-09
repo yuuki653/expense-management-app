@@ -75,6 +75,14 @@ export const isDateInWeek = (
   return dateString >= weekStart && dateString <= weekEnd;
 };
 
+export const isDateInMonth = (
+  dateString: string,
+  monthStart: string,
+  monthEnd: string
+): boolean => {
+  return dateString >= monthStart && dateString <= monthEnd;
+};
+
 export const generateCalendarDates = (startDate: Date): string[] => {
   const dates: string[] = [];
 

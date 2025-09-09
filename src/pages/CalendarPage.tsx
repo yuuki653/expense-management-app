@@ -6,6 +6,7 @@ import {
   getDailyTotal,
   getSaturday,
   getMonthRange,
+  isDateInMonth,
 } from "../utils/dateUtils";
 import { Expense, Category } from "../types/index";
 
@@ -34,9 +35,29 @@ const CalendarPage: React.FC<CalendarPageProps> = ({
   const monthRange = getMonthRange(startSaturday);
   const calendarDates = generateCalendarDates(startSaturday);
 
+  const thisMonthExpenses = expenses.filter((expense) =>
+    isDateInMonth(expense.date, monthRange.start, monthRange.end)
+  );
+  const spentInMonth = thisMonthExpenses.reduce(
+    (total, expense) => total + expense.amount,
+    0
+  );
+
   return (
     <div className="w-[90%] mx-auto">
-      <h2 className="text-2xl font-bold text-center mb-4">カレンダー表示</h2>
+      <div className="flex justify-end items-center mb-4">
+        <div className="flex items-center">
+          <p>開始日を変更：</p>
+          <input
+            type="date"
+            value={getSaturday(startDate).toISOString().split("T")[0]}
+            onChange={(e) =>
+              setStartDate(getSaturday(new Date(e.target.value)))
+            }
+            className="h-8 w-30 border-2 rounded-md border-gray-500 px-2"
+          />
+        </div>
+      </div>
       <div className="flex justify-center gap-5 text-lg font-bold mb-5">
         <button
           onClick={() => {
@@ -56,12 +77,9 @@ const CalendarPage: React.FC<CalendarPageProps> = ({
           ▶
         </button>
       </div>
-      <input
-        type="date"
-        value={getSaturday(startDate).toISOString().split("T")[0]}
-        onChange={(e) => setStartDate(getSaturday(new Date(e.target.value)))}
-        className="h-9 w-60 border-2 rounded-md border-gray-500 px-2"
-      />
+      <p className="text-center mb-5">
+        Total　¥ {spentInMonth.toLocaleString()}
+      </p>
       <div className="grid grid-cols-7 gap-1 max-w-4xl mx-auto">
         <div className="text-center font-bold p-2">Sat</div>
         <div className="text-center font-bold p-2 text-red-600">Sun</div>
