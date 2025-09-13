@@ -7,39 +7,15 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import { Expense, Category } from "../../types/index";
-import {
-  formatShortDate,
-  getSaturday,
-  getWeekRange,
-  isDateInWeek,
-} from "../../utils/dateUtils";
-import { getCategoryChartDataInWeek } from "../../utils/chartUtils";
-
 interface CategoryPieChartProps {
-  expenses: Expense[];
-  categories: Category[];
-  weekOffset: number;
+  data: {
+    name: string;
+    value: number;
+    color: string;
+  }[];
 }
 
-const CategoryPieChart: React.FC<CategoryPieChartProps> = ({
-  expenses,
-  categories,
-  weekOffset,
-}) => {
-  const targetDate = new Date();
-  targetDate.setDate(targetDate.getDate() + weekOffset * 7);
-  const saturday = getSaturday(targetDate);
-  const weekRange = getWeekRange(saturday);
-
-  const data = getCategoryChartDataInWeek(
-    expenses,
-    categories,
-    weekRange.start,
-    weekRange.end
-  );
-  console.log(data);
-
+const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ data }) => {
   const RADIAN = Math.PI / 180;
 
   const renderCustomizedLabel = ({
@@ -82,7 +58,7 @@ const CategoryPieChart: React.FC<CategoryPieChartProps> = ({
           fill="#8884d8"
           dataKey="value"
         >
-          {data.map((entry, index) => (
+          {data.map((entry) => (
             <Cell key={`cell-${entry.name}`} fill={entry.color} />
           ))}
         </Pie>

@@ -85,7 +85,7 @@ const InputForm: React.FC<InputFormProps> = ({
         </div>
       ) : (
         <div className="flex gap-3">
-          <p>予算：{budget.amount}円</p>
+          <p>1週間予算：{budget.amount}円</p>
           <button onClick={handleBudgetEditStart}>編集</button>
         </div>
       )}

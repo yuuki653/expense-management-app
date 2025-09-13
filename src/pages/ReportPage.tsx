@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import WeeklySummary from "../components/WeeklySummary";
 import ExpenseList from "../components/ExpenseList";
-import CategoryPieChart from "../components/Charts/CategoryPieChart";
 import { Expense, Category, Budget } from "../types/index";
+import { getSaturday, getWeekRange, isDateInWeek } from "../utils/dateUtils";
 
 interface ReportPageProps {
   expenses: Expense[];
@@ -19,26 +19,32 @@ const ReportPage: React.FC<ReportPageProps> = ({
   updateExpense,
 }) => {
   const [weekOffset, setWeekOffset] = useState(0);
+  const { weekRange, thisWeekExpenses } = useMemo(() => {
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + weekOffset * 7);
+    const saturday = getSaturday(targetDate);
+    const weekRange = getWeekRange(saturday);
+    const thisWeekExpenses = expenses.filter((expense) =>
+      isDateInWeek(expense.date, weekRange.start, weekRange.end)
+    );
+
+    return { weekRange, thisWeekExpenses };
+  }, [weekOffset, expenses]);
 
   return (
     <div style={{ width: "100%", height: "400px" }}>
       <WeeklySummary
-        expenses={expenses}
         budget={budget}
         weekOffset={weekOffset}
         setWeekOffset={setWeekOffset}
-      />
-      <CategoryPieChart
-        expenses={expenses}
-        categories={categories}
-        weekOffset={weekOffset}
+        weekRange={weekRange}
+        thisWeekExpenses={thisWeekExpenses}
       />
       <ExpenseList
-        expenses={expenses}
         categories={categories}
         deleteExpense={deleteExpense}
         updateExpense={updateExpense}
-        weekOffset={weekOffset}
+        thisWeekExpenses={thisWeekExpenses}
       />
     </div>
   );

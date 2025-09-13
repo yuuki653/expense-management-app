@@ -1,32 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { Expense, Budget } from "../types/index";
-import {
-  formatShortDate,
-  getSaturday,
-  getWeekRange,
-  isDateInWeek,
-} from "../utils/dateUtils";
+import { formatShortDate } from "../utils/dateUtils";
 
 interface WeeklySummaryProps {
-  expenses: Expense[];
   budget: Budget;
   weekOffset: number;
   setWeekOffset: (offset: number) => void;
+  weekRange: { start: string; end: string };
+  thisWeekExpenses: Expense[];
 }
 
 const WeeklySummary: React.FC<WeeklySummaryProps> = ({
-  expenses,
   budget,
   weekOffset,
   setWeekOffset,
+  weekRange,
+  thisWeekExpenses,
 }) => {
-  const targetDate = new Date();
-  targetDate.setDate(targetDate.getDate() + weekOffset * 7);
-  const saturday = getSaturday(targetDate);
-  const weekRange = getWeekRange(saturday);
-  const thisWeekExpenses = expenses.filter((expense) =>
-    isDateInWeek(expense.date, weekRange.start, weekRange.end)
-  );
   const spent = thisWeekExpenses.reduce(
     (total, expense) => total + expense.amount,
     0
@@ -58,9 +48,9 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({
           {formatShortDate(weekRange.start)} ～ {formatShortDate(weekRange.end)}
         </p>
         <div>
-          <p>予算：{budget.amount.toLocaleString()}円</p>
-          <p>支出：{spent.toLocaleString()}円</p>
-          <p>残金：{remaining.toLocaleString()}円</p>
+          <p>予算：¥ {budget.amount.toLocaleString()}</p>
+          <p>支出：¥ {spent.toLocaleString()}</p>
+          <p>残金：¥ {remaining.toLocaleString()}</p>
         </div>
       </div>
     </div>

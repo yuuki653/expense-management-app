@@ -20,13 +20,19 @@ const Header = () => {
               to="/calendar"
               className="bg-blue-300 hover:bg-blue-500 rounded-md px-1 flex items-center transition-colors"
             >
-              <span>calendar</span>
+              <span>5week</span>
             </Link>
             <Link
               to="/report"
               className="bg-blue-300 hover:bg-blue-500 rounded-md px-1 flex items-center transition-colors"
             >
-              <span>report</span>
+              <span>1week</span>
+            </Link>
+            <Link
+              to="/chart"
+              className="bg-blue-300 hover:bg-blue-500 rounded-md px-1 flex items-center transition-colors"
+            >
+              <span>chart</span>
             </Link>
           </div>
         </div>

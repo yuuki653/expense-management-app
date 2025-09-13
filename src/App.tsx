@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { saveData, loadData, removeData } from "./utils/localStorage";
+import { saveData, loadData } from "./utils/localStorage";
 import Layout from "./components/Layout";
 import RecordPage from "./pages/RecordPage";
 import CalendarPage from "./pages/CalendarPage";
 import ReportPage from "./pages/ReportPage";
 import CategoryManagementPage from "./pages/CategoryManagementPage";
+import ChartPage from "./pages/ChartPage";
 import { Expense, Category, Budget } from "./types/index";
 
 function App() {
@@ -91,7 +92,6 @@ function App() {
             element={
               <RecordPage
                 addExpense={addExpense}
-                addCategory={addCategory}
                 categories={categories}
                 budget={budget}
                 setBudget={setBudget}
@@ -129,6 +129,10 @@ function App() {
                 categories={categories}
               />
             }
+          ></Route>
+          <Route
+            path="/chart"
+            element={<ChartPage expenses={expenses} categories={categories} />}
           ></Route>
         </Routes>
       </Layout>

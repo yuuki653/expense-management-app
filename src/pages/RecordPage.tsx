@@ -5,7 +5,6 @@ import { Expense, Category, Budget } from "../types/index";
 
 interface RecordPageProps {
   addExpense: (expenses: Expense) => void;
-  addCategory: (name: string) => void;
   categories: Category[];
   budget: Budget;
   setBudget: (amount: number) => void;
@@ -13,7 +12,6 @@ interface RecordPageProps {
 
 const RecordPage: React.FC<RecordPageProps> = ({
   addExpense,
-  addCategory,
   categories,
   budget,
   setBudget,

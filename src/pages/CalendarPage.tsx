@@ -9,6 +9,7 @@ import {
   isDateInMonth,
 } from "../utils/dateUtils";
 import { Expense, Category } from "../types/index";
+import { loadData, saveData } from "../utils/localStorage";
 
 interface CalendarPageProps {
   expenses: Expense[];
@@ -23,7 +24,10 @@ const CalendarPage: React.FC<CalendarPageProps> = ({
   deleteExpense,
   updateExpense,
 }) => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(() => {
+    const saved = loadData<string>("calendarStartDate");
+    return saved ? new Date(saved) : new Date();
+  });
   const [selectedDate, setSelectedDate] = useState<string>(
     new Date().toISOString().split("T")[0]
   );
@@ -51,9 +55,12 @@ const CalendarPage: React.FC<CalendarPageProps> = ({
           <input
             type="date"
             value={getSaturday(startDate).toISOString().split("T")[0]}
-            onChange={(e) =>
-              setStartDate(getSaturday(new Date(e.target.value)))
-            }
+            onChange={(e) => {
+              const newStartDate = getSaturday(new Date(e.target.value));
+              setStartDate(newStartDate);
+              saveData("calendarStartDate", newStartDate.toISOString());
+              setMonthOffset(0);
+            }}
             className="h-8 w-30 border-2 rounded-md border-gray-500 px-2"
           />
         </div>
