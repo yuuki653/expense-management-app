@@ -32,7 +32,12 @@ const ReportPage: React.FC<ReportPageProps> = ({
   }, [weekOffset, expenses]);
 
   return (
-    <div style={{ width: "100%", height: "400px" }}>
+    <div className="w-[90%] mx-auto">
+      <div className="flex items-center justify-center my-5">
+        <hr className="flex-grow border-2 border-gray-400" />
+        <p className="mx-3 text-lg font-bold">record</p>
+        <hr className="flex-grow border-2 border-gray-400" />
+      </div>
       <WeeklySummary
         budget={budget}
         weekOffset={weekOffset}

@@ -73,7 +73,12 @@ const ChartPage: React.FC<ChartPageProps> = ({ expenses, categories }) => {
   );
 
   return (
-    <div>
+    <div className="w-[90%] mx-auto">
+      <div className="flex items-center justify-center my-5">
+        <hr className="flex-grow border-2 border-gray-400" />
+        <p className="mx-3 text-lg font-bold">record</p>
+        <hr className="flex-grow border-2 border-gray-400" />
+      </div>
       <div className="flex justify-center gap-5 text-lg font-bold mb-5">
         <button
           onClick={() => {

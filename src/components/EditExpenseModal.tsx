@@ -84,13 +84,13 @@ const EditExpenseModal: React.FC<EditExpenseModalProps> = ({
 
         <div className="flex gap-2 mt-4">
           <button
-            className="bg-blue-500 text-white px-4 py-2 rounded"
+            className="h-9 text-blue-700 underline decoration-2 underline-offset-4 px-3 hover:bg-blue-400 hover:text-gray-100 rounded-md transition-colors"
             onClick={handleSave}
           >
             保存
           </button>
           <button
-            className="bg-gray-500 text-white px-4 py-2 rounded"
+            className="h-9 underline decoration-2 underline-offset-4 px-3 hover:bg-gray-500 hover:text-gray-100 rounded-md transition-colors"
             onClick={onClose}
           >
             キャンセル

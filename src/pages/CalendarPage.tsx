@@ -49,21 +49,10 @@ const CalendarPage: React.FC<CalendarPageProps> = ({
 
   return (
     <div className="w-[90%] mx-auto">
-      <div className="flex justify-end items-center mb-4">
-        <div className="flex items-center">
-          <p>開始日を変更：</p>
-          <input
-            type="date"
-            value={getSaturday(startDate).toISOString().split("T")[0]}
-            onChange={(e) => {
-              const newStartDate = getSaturday(new Date(e.target.value));
-              setStartDate(newStartDate);
-              saveData("calendarStartDate", newStartDate.toISOString());
-              setMonthOffset(0);
-            }}
-            className="h-8 w-30 border-2 rounded-md border-gray-500 px-2"
-          />
-        </div>
+      <div className="flex items-center justify-center my-5">
+        <hr className="flex-grow border-2 border-gray-400" />
+        <p className="mx-3 text-lg font-bold">5week</p>
+        <hr className="flex-grow border-2 border-gray-400" />
       </div>
       <div className="flex justify-center gap-5 text-lg font-bold mb-5">
         <button
@@ -84,9 +73,25 @@ const CalendarPage: React.FC<CalendarPageProps> = ({
           ▶
         </button>
       </div>
-      <p className="text-center mb-5">
+      <p className="text-center text-lg mb-3">
         Total　¥ {spentInMonth.toLocaleString()}
       </p>
+      <div className="flex justify-end items-center mb-5">
+        <div className="flex items-center text-sm">
+          <p>開始日を変更：</p>
+          <input
+            type="date"
+            value={getSaturday(startDate).toISOString().split("T")[0]}
+            onChange={(e) => {
+              const newStartDate = getSaturday(new Date(e.target.value));
+              setStartDate(newStartDate);
+              saveData("calendarStartDate", newStartDate.toISOString());
+              setMonthOffset(0);
+            }}
+            className="h-7 w-30 border-2 rounded-md border-gray-500 px-2"
+          />
+        </div>
+      </div>
       <div className="grid grid-cols-7 gap-1 max-w-4xl mx-auto">
         <div className="text-center font-bold p-2">Sat</div>
         <div className="text-center font-bold p-2 text-red-600">Sun</div>

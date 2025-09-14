@@ -4,37 +4,36 @@ import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <header>
-      <div className="bg-gray-100 h-20 flex items-center mb-10">
-        <div className="flex justify-between w-[90%] mx-auto">
-          <div>
-            <h1 className="text-xl">💰 Expense Management</h1>
-          </div>
-          <div className="flex gap-3">
-            <Link
-              to="/"
-              className="bg-blue-300 hover:bg-blue-500 rounded-md px-1 flex items-center transition-colors"
-            >
-              <span>record</span>
-            </Link>
-            <Link
-              to="/calendar"
-              className="bg-blue-300 hover:bg-blue-500 rounded-md px-1 flex items-center transition-colors"
-            >
-              <span>5week</span>
-            </Link>
-            <Link
-              to="/report"
-              className="bg-blue-300 hover:bg-blue-500 rounded-md px-1 flex items-center transition-colors"
-            >
-              <span>1week</span>
-            </Link>
-            <Link
-              to="/chart"
-              className="bg-blue-300 hover:bg-blue-500 rounded-md px-1 flex items-center transition-colors"
-            >
-              <span>chart</span>
-            </Link>
-          </div>
+      <div className="bg-gray-100 mb-5 py-5">
+        <div className="w-[90%] mx-auto text-center">
+          <h1 className="text-xl font-bold mb-4">💰 Expense Management</h1>
+        </div>
+
+        <div className="w-[90%] mx-auto flex justify-center gap-3">
+          <Link
+            to="/"
+            className="flex items-center bg-gray-100 border border-blue-500 hover:bg-blue-500 hover:text-gray-100 rounded-md px-1 transition-colors"
+          >
+            <span>record</span>
+          </Link>
+          <Link
+            to="/calendar"
+            className="flex items-center bg-gray-100 border border-blue-500 hover:bg-blue-500 hover:text-gray-100 rounded-md px-1 transition-colors"
+          >
+            <span>5week</span>
+          </Link>
+          <Link
+            to="/report"
+            className="flex items-center bg-gray-100 border border-blue-500 hover:bg-blue-500 hover:text-gray-100 rounded-md px-1 transition-colors"
+          >
+            <span>1week</span>
+          </Link>
+          <Link
+            to="/chart"
+            className="flex items-center bg-gray-100 border border-blue-500 hover:bg-blue-500 hover:text-gray-100 rounded-md px-1 transition-colors"
+          >
+            <span>chart</span>
+          </Link>
         </div>
       </div>
     </header>

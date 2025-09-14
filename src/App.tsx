@@ -65,14 +65,6 @@ function App() {
     setExpenses([...expenses, expense]);
   };
 
-  const addCategory = (name: string) => {
-    const newCategory: Category = {
-      id: name.toLowerCase().replace(/\s+/g, "_"),
-      name,
-    };
-    setCategories([...categories, newCategory]);
-  };
-
   const deleteExpense = (id: string) => {
     setExpenses(expenses.filter((expense) => expense.id !== id));
   };
@@ -125,8 +117,9 @@ function App() {
             path="/category"
             element={
               <CategoryManagementPage
-                addCategory={addCategory}
+                setCategories={setCategories}
                 categories={categories}
+                expenses={expenses}
               />
             }
           ></Route>

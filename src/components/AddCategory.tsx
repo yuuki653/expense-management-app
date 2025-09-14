@@ -1,75 +1,79 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 import CategoryList from "./CategoryList";
-import { Category } from "../types/index";
+import { Category, Expense } from "../types/index";
 import { isDuplicationCategory } from "../utils/categoryUtils";
 
 interface AddCategoryProps {
-  addCategory: (name: string) => void;
   categories: Category[];
+  setCategories: ([]: Category[]) => void;
+  expenses: Expense[];
 }
 
 const AddCategory: React.FC<AddCategoryProps> = ({
-  addCategory,
   categories,
+  setCategories,
+  expenses,
 }) => {
-  const navigate = useNavigate();
   const [category, setCategory] = useState<string>("");
 
-  const handleAdd = () => {
+  const handleAddCategory = (name: string) => {
+    if (!name) {
+      alert("カテゴリー名を入力してください");
+      return;
+    }
     if (isDuplicationCategory(category, categories)) {
       alert("同じカテゴリー名があります");
       return;
     }
-    addCategory(category);
+    const newCategory: Category = {
+      id: name.toLowerCase().replace(/\s+/g, "_"),
+      name,
+    };
+    setCategories([...categories, newCategory]);
     setCategory("");
   };
 
   return (
-    <div className="w-[50%] mx-auto">
-      <div className="bg-gray-100 rounded-md p-8 mt-10 text-center">
-        <button
-          className="text-green-600 underline decoration-2 underline-offset-4 text-sm hover:text-green-700 transition-colors"
-          onClick={() => {
-            navigate(-1);
+    <div className="w-[80%] mx-auto">
+      <div className="flex justify-center items-center gap-1 my-5 ">
+        <input
+          type="text"
+          value={category}
+          onChange={(e) => {
+            setCategory(e.target.value);
           }}
-        >
-          戻る
-        </button>
-        <p className="text-xl font-bold mb-5">カテゴリー管理</p>
-        <div className="flex justify-center gap-1 mb-5">
-          <input
-            type="text"
-            value={category}
-            onChange={(e) => {
-              setCategory(e.target.value);
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                if (isDuplicationCategory(category, categories)) {
-                  alert("同じカテゴリー名があります");
-                  return;
-                }
-                addCategory(category);
-                setCategory("");
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              if (isDuplicationCategory(category, categories)) {
+                alert("同じカテゴリー名があります");
+                return;
               }
-            }}
-            placeholder="新しいカテゴリー"
-            className="h-9 w-40 border-2 rounded-md border-gray-500 px-2"
-          />
-          <button
-            onClick={handleAdd}
-            className="h-9 w-16 border-2 border-green-800 bg-green-300 hover:bg-green-500 rounded-md px-3 flex items-center justify-center transition-colors"
-          >
-            追加
-          </button>
-        </div>
-        <ul>
-          {categories.map((category) => (
-            <CategoryList key={category.id} category={category.name} />
-          ))}
-        </ul>
+              handleAddCategory(category);
+              setCategory("");
+            }
+          }}
+          placeholder="新しいカテゴリー"
+          className="w-44 h-9 border-2 rounded-md border-gray-500 px-2"
+        />
+        <button
+          onClick={() => handleAddCategory(category)}
+          className="w-14 h-9 text-green-700 underline decoration-2 underline-offset-4 px-3 hover:bg-green-400 hover:text-gray-100 rounded-md transition-colors"
+        >
+          追加
+        </button>
       </div>
+      <ul className="w-60 mx-auto">
+        {categories.map((category) => (
+          <CategoryList
+            key={category.id}
+            category={category}
+            categories={categories}
+            setCategories={setCategories}
+            expenses={expenses}
+          />
+        ))}
+      </ul>
     </div>
   );
 };

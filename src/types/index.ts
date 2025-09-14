@@ -14,4 +14,5 @@ export interface Budget {
 export interface Category {
   id: string;
   name: string;
+  deleted?: boolean;
 }
