@@ -26,7 +26,7 @@ const DailyExpenseList: React.FC<DailyExpenseListProps> = ({
   );
 
   return (
-    <div className="mt-5">
+    <div className="my-5">
       <div className="flex">
         <p>{formatDate(selectedDate)}</p>
         {getDailyTotal(selectedDate, expenses) > 0 ? (
@@ -81,12 +81,23 @@ const DailyExpenseList: React.FC<DailyExpenseListProps> = ({
                 >
                   <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h2.879a1.5 1.5 0 0 1 1.06.44l1.122 1.12A1.5 1.5 0 0 0 9.62 4H12.5A1.5 1.5 0 0 1 14 5.5v1.401a2.986 2.986 0 0 0-1.5-.401h-9c-.546 0-1.059.146-1.5.401V3.5ZM2 9.5v3A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5v-3A1.5 1.5 0 0 0 12.5 8h-9A1.5 1.5 0 0 0 2 9.5Z" />
                 </svg>
-
-                <p className="flex ml-4">
+                <p className="ml-4">
                   {getCategoryName(expense.category, categories)}
-                  {expense.memo && <p>：{expense.memo}</p>}
                 </p>
               </div>
+              {expense.memo && (
+                <div className="flex items-center ml-8">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    className="size-4"
+                  >
+                    <path d="M7.25 3.688a8.035 8.035 0 0 0-4.872-.523A.48.48 0 0 0 2 3.64v7.994c0 .345.342.588.679.512a6.02 6.02 0 0 1 4.571.81V3.688ZM8.75 12.956a6.02 6.02 0 0 1 4.571-.81c.337.075.679-.167.679-.512V3.64a.48.48 0 0 0-.378-.475 8.034 8.034 0 0 0-4.872.523v9.268Z" />
+                  </svg>
+                  <p className="ml-4">{expense.memo}</p>
+                </div>
+              )}
               <div className="flex items-center ml-8">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +116,7 @@ const DailyExpenseList: React.FC<DailyExpenseListProps> = ({
                   onClick={() => {
                     setEditingExpense(expense);
                   }}
-                  className="ml-4 text-blue-400 hover:text-blue-800 rounded-md transition-colors"
+                  className="ml-4 hover:underline decoration-2 underline-offset-4 text-blue-400 hover:text-blue-800 rounded-md transition-colors"
                 >
                   編集
                 </button>
@@ -113,7 +124,7 @@ const DailyExpenseList: React.FC<DailyExpenseListProps> = ({
                   onClick={() => {
                     deleteExpense(expense.id);
                   }}
-                  className="ml-2 text-red-400 hover:text-red-800 rounded-md transition-colors"
+                  className="ml-2 hover:underline decoration-2 underline-offset-4 text-red-400 hover:text-red-800 rounded-md transition-colors"
                 >
                   削除
                 </button>

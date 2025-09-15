@@ -70,7 +70,7 @@ const InputForm: React.FC<InputFormProps> = ({
   const activeCategories = categories.filter((category) => !category.deleted);
 
   return (
-    <div className="w-[80%] mx-auto">
+    <div>
       {error && (
         <div className="text-center text-rose-700 font-bold">{error}</div>
       )}

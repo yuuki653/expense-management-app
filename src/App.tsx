@@ -74,6 +74,7 @@ function App() {
       expenses.map((expense) => (expense.id === id ? updateExpense : expense))
     );
   };
+  console.log(categories);
 
   return (
     <Router>

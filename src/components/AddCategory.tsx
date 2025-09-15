@@ -35,7 +35,7 @@ const AddCategory: React.FC<AddCategoryProps> = ({
   };
 
   return (
-    <div className="w-[80%] mx-auto">
+    <div>
       <div className="flex justify-center items-center gap-1 my-5 ">
         <input
           type="text"

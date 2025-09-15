@@ -58,7 +58,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
       const targetCategory = categories.find(
         (category) => category.id === deleteId
       );
-      const newCategoryList = categories.filter((category) =>
+      const newCategoryList = categories.map((category) =>
         category.id === deleteId
           ? {
               ...category,
@@ -119,13 +119,13 @@ const CategoryList: React.FC<CategoryListProps> = ({
           <>
             <button
               onClick={() => handleEditSave(category.id)}
-              className="ml-2 text-blue-400 hover:text-blue-800 rounded-md transition-colors"
+              className="ml-2 hover:underline decoration-2 underline-offset-4 text-blue-400 hover:text-blue-800 rounded-md transition-colors"
             >
               保存
             </button>
             <button
               onClick={() => setEditingId(null)}
-              className="ml-2 text-red-400 hover:text-red-800 rounded-md transition-colors"
+              className="ml-2 hover:underline decoration-2 underline-offset-4 text-red-400 hover:text-red-800 rounded-md transition-colors"
             >
               キャンセル
             </button>
@@ -134,13 +134,13 @@ const CategoryList: React.FC<CategoryListProps> = ({
           <>
             <button
               onClick={() => handleEditStart(category)}
-              className="ml-2 text-blue-400 hover:text-blue-800 rounded-md transition-colors"
+              className="ml-2 hover:underline decoration-2 underline-offset-4 text-blue-400 hover:text-blue-800 rounded-md transition-colors"
             >
               編集
             </button>
             <button
               onClick={() => handledeleteCategory(category.id)}
-              className="ml-2 text-red-400 hover:text-red-800 rounded-md transition-colors"
+              className="ml-2 hover:underline decoration-2 underline-offset-4 text-red-400 hover:text-red-800 rounded-md transition-colors"
             >
               削除
             </button>

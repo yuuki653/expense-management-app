@@ -25,33 +25,31 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({
   const remaining = budget.amount - spent;
 
   return (
-    <div className="w-[50%] mx-auto">
-      <div className="bg-gray-100 rounded-md p-8 mt-10 text-center">
-        <div className="flex justify-center gap-5 text-xl font-bold mb-5">
-          <button
-            onClick={() => {
-              setWeekOffset(weekOffset - 1);
-            }}
-          >
-            ◁
-          </button>
-          <p>1週間の記録</p>
-          <button
-            onClick={() => {
-              setWeekOffset(weekOffset + 1);
-            }}
-          >
-            ▷
-          </button>
-        </div>
-        <p>
-          {formatShortDate(weekRange.start)} ～ {formatShortDate(weekRange.end)}
-        </p>
-        <div>
-          <p>予算：¥ {budget.amount.toLocaleString()}</p>
-          <p>支出：¥ {spent.toLocaleString()}</p>
-          <p>残金：¥ {remaining.toLocaleString()}</p>
-        </div>
+    <div className="mx-auto w-60 border-2 rounded-md py-3 text-center">
+      <div className="flex justify-center gap-5 text-xl font-bold mb-5">
+        <button
+          onClick={() => {
+            setWeekOffset(weekOffset - 1);
+          }}
+        >
+          ◁
+        </button>
+        <p>1週間の記録</p>
+        <button
+          onClick={() => {
+            setWeekOffset(weekOffset + 1);
+          }}
+        >
+          ▷
+        </button>
+      </div>
+      <p className="mb-3">
+        {formatShortDate(weekRange.start)} ～ {formatShortDate(weekRange.end)}
+      </p>
+      <div>
+        <p>予算：¥ {budget.amount.toLocaleString()}</p>
+        <p>支出：¥ {spent.toLocaleString()}</p>
+        <p>残金：¥ {remaining.toLocaleString()}</p>
       </div>
     </div>
   );

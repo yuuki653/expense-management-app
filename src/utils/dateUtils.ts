@@ -1,5 +1,13 @@
 import { Expense } from "../types";
 
+export const formatDay = (date: Date): string => {
+  const day = new Date(date);
+
+  const getDayString = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+
+  return getDayString[day.getDay()];
+};
+
 export const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
 

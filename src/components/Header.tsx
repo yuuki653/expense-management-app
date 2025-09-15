@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <header>
-      <div className="bg-gray-100 mb-5 py-5">
+      <div className="bg-gray-100 mb-5 py-5 shadow-lg">
         <div className="w-[90%] mx-auto text-center">
           <h1 className="text-xl font-bold mb-4">💰 Expense Management</h1>
         </div>

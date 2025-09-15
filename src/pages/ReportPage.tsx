@@ -35,7 +35,7 @@ const ReportPage: React.FC<ReportPageProps> = ({
     <div className="w-[90%] mx-auto">
       <div className="flex items-center justify-center my-5">
         <hr className="flex-grow border-2 border-gray-400" />
-        <p className="mx-3 text-lg font-bold">record</p>
+        <p className="mx-3 text-lg font-bold">report</p>
         <hr className="flex-grow border-2 border-gray-400" />
       </div>
       <WeeklySummary
